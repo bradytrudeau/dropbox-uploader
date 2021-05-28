@@ -57,8 +57,7 @@ const RecordView = () => {
     setCurStatus(false);
   }
 
-  // Stops recording of new video and
-  // creates blob
+  // Stops recording of new video and creates blob
   const stoppedRec = async () => {
     stopRecording();
     setCurStatus(true);

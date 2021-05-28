@@ -1,10 +1,12 @@
 import React, {useState}  from 'react';
 import { FaCameraRetro } from 'react-icons/fa';
 import {Dropbox} from 'dropbox';
+import ReactPlayer from 'react-player';
 
 const UploadView = () => {
 
   const [selectedFile, setSelectedFile] = useState();
+  const [videoPreview, setPreview] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
   // Handles upload of selected file to Dropbox
@@ -28,14 +30,27 @@ const UploadView = () => {
     const changeHandler = (event) => {
       setSelectedFile(event.target.files[0]);
       setIsFilePicked(true);
+      setPreview(URL.createObjectURL(event.target.files[0]));
     };
   
 
   return (
     <div>
-      <div>
-        {/* <video src={selectedFile} controls/> */}
-      </div>
+      {!isFilePicked ?
+      <div className='player-wrapper'>
+        <ReactPlayer 
+          className='react-player'
+          url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+          width='50%'
+          height='100%' />
+      </div> :
+      <div className='player-wrapper'>
+        <ReactPlayer 
+          className='react-player'
+          url={videoPreview}
+          width='50%'
+          height='100%' />
+      </div>}
       <h1
         className="icon"
       >
@@ -58,7 +73,7 @@ const UploadView = () => {
         <label 
           className="file-upload"
           for="confirm-upload">
-            UPLOAD VIDEO
+            SUBMIT VIDEO
         </label>
         <input 
           id="confirm-upload"
