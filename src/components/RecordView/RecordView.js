@@ -12,6 +12,7 @@ const RecordView = () => {
 
   const [curStatus, setCurStatus] = useState(true);
 
+  // Uploads existing file to dbx
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     var ACCESS_TOKEN = 'sl.AxuAvN9xOeuB-kp6McDD4go1gVq_ZJSar4AFtlEZ28MDwEnvVO-Vwe7fRKigttuaH_UBfC20RYKD9pbT53A_DmLl_2nPuJ8M1QN0BzvBbI3iQSUKXb35LSfILx84wYjem85vAQ7j';
@@ -28,6 +29,7 @@ const RecordView = () => {
         });
     }
 
+  // Uploads newly recorded video to dbx
   const uploadNewVideoToDropbox = (file) => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     var ACCESS_TOKEN = 'sl.AxuAvN9xOeuB-kp6McDD4go1gVq_ZJSar4AFtlEZ28MDwEnvVO-Vwe7fRKigttuaH_UBfC20RYKD9pbT53A_DmLl_2nPuJ8M1QN0BzvBbI3iQSUKXb35LSfILx84wYjem85vAQ7j';
@@ -42,28 +44,31 @@ const RecordView = () => {
         });
     }
 
+  // Converts blob to file for upload to dbx
   const blobToFile = (blob) => {
     let newBlob = new File([blob], "rbc-wafa2.mp4");
     console.log('BLOB FILE:', newBlob);
     uploadNewVideoToDropbox(newBlob);
   }
 
+  // Starts recording of new video
   const startedRec = () => {
     startRecording();
     setCurStatus(false);
   }
 
+  // Stops recording of new video and
+  // creates blob
   const stoppedRec = async () => {
     stopRecording();
     setCurStatus(true);
     const audioBlob = await fetch(mediaBlobUrl).then(r => r.blob());
-
     const url = new Blob ([audioBlob]);
-
     let audioFile = url;
     console.log('Audio File:', audioFile);
     console.log('BLOB:', audioBlob);
-    
+
+    // Calls function to convert blob to file
     blobToFile(url);
   }
 

@@ -4,56 +4,68 @@ import {Dropbox} from 'dropbox';
 
 const UploadView = () => {
 
-  const [newFile, setNewFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
 
   // Handles upload of selected file to Dropbox
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+    console.log('Selected File:', selectedFile);
     var ACCESS_TOKEN = 'sl.AxuAvN9xOeuB-kp6McDD4go1gVq_ZJSar4AFtlEZ28MDwEnvVO-Vwe7fRKigttuaH_UBfC20RYKD9pbT53A_DmLl_2nPuJ8M1QN0BzvBbI3iQSUKXb35LSfILx84wYjem85vAQ7j';
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-    var fileInput = document.getElementById('file-upload');
-    var file = fileInput.files[0];
-    console.log('FILE:', file);
-        dbx.filesUpload({path: '/' + file.name, contents: file})
+    console.log('FILE:', selectedFile);
+        dbx.filesUpload({path: '/' + selectedFile.name, contents: selectedFile})
         .then(function(response) {
           console.log(response);
         })
         .catch(function(error) {
           console.error(error);
         });
+    
     }
 
-    // Handles input change
-    const handleInputChangeFor = (newFile) => (event) => {
-      setNewFile(event.target.value)
-      console.log('ETV:', event.target.value);
-      
+    // Handles input change and assigns input value to selectedFile variable
+    const changeHandler = (event) => {
+      setSelectedFile(event.target.files[0]);
+      setIsFilePicked(true);
     };
+  
 
   return (
     <div>
       <div>
-        {/* <video src={newFile} controls/> */}
+        {/* <video src={selectedFile} controls/> */}
       </div>
       <h1
         className="icon"
       >
         <FaCameraRetro/>
       </h1>
-      <label 
-        className="file-upload"
-        for="file-upload">
-          UPLOAD VIDEO
-      </label>
-      <input 
-        id="file-upload"
-        type="file"
-        onChange={handleInputChangeFor(newFile)}
-      />
-      <button
-        onClick={() => uploadToDropbox()}>
-          Upload
-      </button>
+      {!isFilePicked ?
+      <div>
+        <label 
+          className="file-upload"
+          for="file-upload">
+            UPLOAD VIDEO
+        </label>
+        <input 
+          id="file-upload"
+          type="file"
+          onChange={changeHandler}
+        /> 
+      </div> :
+      <div>
+        <label 
+          className="file-upload"
+          for="confirm-upload">
+            UPLOAD VIDEO
+        </label>
+        <input 
+          id="confirm-upload"
+          type="submit"
+          onClick={() => uploadToDropbox()}
+        /> 
+      </div>}
     </div>
   );
 };
