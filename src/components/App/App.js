@@ -15,12 +15,12 @@ class App extends Component {
       <div className="App">
         <img src={Logo} className="logo"></img>
           <div id='hero'>
-            <MobileView>
+            {/* <MobileView> */}
               <RecordView/>
-            </MobileView>
-            <BrowserView>
+            {/* </MobileView> */}
+            {/* <BrowserView>
               <UploadView/>
-            </BrowserView>
+            </BrowserView> */}
           </div>
       </div>
     );
