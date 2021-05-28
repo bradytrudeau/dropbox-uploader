@@ -8,7 +8,7 @@ const UploadView = () => {
 
   // Handles upload of selected file to Dropbox
   const uploadToDropbox = () => {
-    const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+    // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     var ACCESS_TOKEN = 'sl.AxuAvN9xOeuB-kp6McDD4go1gVq_ZJSar4AFtlEZ28MDwEnvVO-Vwe7fRKigttuaH_UBfC20RYKD9pbT53A_DmLl_2nPuJ8M1QN0BzvBbI3iQSUKXb35LSfILx84wYjem85vAQ7j';
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     var fileInput = document.getElementById('file-upload');
@@ -51,7 +51,7 @@ const UploadView = () => {
         onChange={handleInputChangeFor(newFile)}
       />
       <button
-        onClick={() => this.uploadToDropbox()}>
+        onClick={() => uploadToDropbox()}>
           Upload
       </button>
     </div>
