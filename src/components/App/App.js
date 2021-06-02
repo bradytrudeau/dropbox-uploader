@@ -7,6 +7,7 @@ import {
 } from "react-device-detect";
 import RecordView from '../RecordView/RecordView';
 import UploadView from '../UploadView/UploadView';
+import RecordingAPI from "../TestComponent/TestComponent";
 
 class App extends Component {
 
@@ -15,12 +16,13 @@ class App extends Component {
       <div className="App">
         <img src={Logo} className="logo"></img>
           <div id='hero'>
-            {/* <MobileView> */}
+            {/* <RecordingAPI/> */}
+            <MobileView>
               <RecordView/>
-            {/* </MobileView> */}
-            {/* <BrowserView>
+            </MobileView>
+            <BrowserView>
               <UploadView/>
-            </BrowserView> */}
+            </BrowserView>
           </div>
       </div>
     );

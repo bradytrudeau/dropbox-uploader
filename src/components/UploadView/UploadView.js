@@ -2,6 +2,9 @@ import React, {useState}  from 'react';
 import { FaCameraRetro } from 'react-icons/fa';
 import {Dropbox} from 'dropbox';
 import ReactPlayer from 'react-player';
+import Photo from '../../Images/sample-photo-rbc.png';
+import Icon from '../../Images/rbc-icon4.png';
+
 
 const UploadView = () => {
 
@@ -13,7 +16,7 @@ const UploadView = () => {
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     console.log('Selected File:', selectedFile);
-    var ACCESS_TOKEN = 'sl.AxuAvN9xOeuB-kp6McDD4go1gVq_ZJSar4AFtlEZ28MDwEnvVO-Vwe7fRKigttuaH_UBfC20RYKD9pbT53A_DmLl_2nPuJ8M1QN0BzvBbI3iQSUKXb35LSfILx84wYjem85vAQ7j';
+    var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     console.log('FILE:', selectedFile);
         dbx.filesUpload({path: '/' + selectedFile.name, contents: selectedFile})
@@ -38,23 +41,16 @@ const UploadView = () => {
     <div>
       {!isFilePicked ?
       <div className='player-wrapper'>
-        <ReactPlayer 
-          className='react-player'
-          url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-          width='50%'
-          height='100%' />
+        <img src={Photo}/>
       </div> :
-      <div className='player-wrapper'>
-        <ReactPlayer 
-          className='react-player'
-          url={videoPreview}
-          width='50%'
-          height='100%' />
-      </div>}
+      <video width="700" height="350" controls>
+        <source src={URL.createObjectURL(selectedFile)}/>
+      </video>
+      }
       <h1
         className="icon"
       >
-        <FaCameraRetro/>
+        <img src={Icon}/>
       </h1>
       {!isFilePicked ?
       <div>
