@@ -6,21 +6,28 @@ body {
 
 .App {
   text-align: center;
+}
+
+#hero {
+}
+
+.mobile {
+  text-align: center;
   background-color: #ffffff;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 800px;
-  height: 750px;
-  margin-left: -400px;
-  margin-top: -375px;
+  width: 400px;
+  height: 450px;
+  margin-left: -200px;
+  margin-top: -225px;
   border-radius: 10%;
 }
 
-#hero {
-  padding-right: 40px;
+#mobile-inner {
+  /* padding-right: 40px;
   padding-left: 40px;
-  padding-bottom: 250px;
+  padding-bottom: 250px; */
   text-align: center;
 }
 
@@ -85,6 +92,56 @@ body {
 }
 
 #video-record {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.video-record-mobile {
+  font-size: 14px;
+  background: #98CAD8;
+  border: 0;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+
+.file-upload-mobile {
+  font-size: 14px;
+  background: #E6E6E6;
+  border: 0;
+  color: #0560AA;
+  padding: 10px 20px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-left: 5px;
+}
+
+#file-upload-mobile {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+#video-record-mobile {
   position: absolute;
   z-index: -1;
   top: 0;

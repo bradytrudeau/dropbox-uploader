@@ -4,6 +4,8 @@ import {Dropbox} from 'dropbox';
 import ReactPlayer from 'react-player';
 import Photo from '../../Images/sample-photo-rbc.png';
 import Icon from '../../Images/rbc-icon4.png';
+import Logo from '../../Images/rbc-logo.png';
+
 
 
 const UploadView = () => {
@@ -39,6 +41,7 @@ const UploadView = () => {
 
   return (
     <div>
+      <img src={Logo} className="logo"></img>
       {!isFilePicked ?
       <div className='player-wrapper'>
         <img src={Photo}/>

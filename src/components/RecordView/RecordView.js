@@ -3,6 +3,10 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { FaCameraRetro } from 'react-icons/fa';
 import {Dropbox} from 'dropbox';
 import ReactPlayer from 'react-player';
+import Logo from '../../Images/rbc-logo.png';
+import Photo from '../../Images/sample-photo-rbc.png';
+import Icon from '../../Images/rbc-icon4.png';
+
 
 
 const RecordView = () => {
@@ -112,48 +116,41 @@ const RecordView = () => {
 
   return (
     <div>
-      
+      <img width="50%" height="50%" src={Logo} className="logo-mobile"></img>
       {!isFilePicked ?
-      <div className='player-wrapper'>
-        <ReactPlayer 
-          className='react-player'
-          url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-          width='50%'
-          height='100%' />
-      </div> :
-      <div className='player-wrapper'>
-        <ReactPlayer 
-          className='react-player'
-          url={videoPreview}
-          width='50%'
-          height='100%' />
-      </div>}
+        <div className='player-wrapper-mobile'>
+          <img width="350" height="175" src={Photo}/>
+        </div> :
+        <video width="700" height="350" controls>
+          <source src={URL.createObjectURL(selectedFile)}/>
+        </video>
+      }
       <h1
         className="icon"
       >
-        <FaCameraRetro/>
+      <img width="50%" height="50%" src={Icon}/>
       </h1>
       {curStatus ?
       <span>     
         <label
-          className="video-record" 
-          for="video-record">
+          className="video-record-mobile" 
+          for="video-record-mobile">
             RECORD VIDEO
         </label>
         <input 
-          id="video-record"
+          id="video-record-mobile"
           onClick={startedRec}
         />
       </span>  
       :
       <span>     
         <label
-          className="video-record" 
-          for="video-record">
+          className="video-record-mobile" 
+          for="video-record-mobile">
             STOP RECORDING
         </label>
         <input 
-          id="video-record"
+          id="video-record-mobile"
           onClick={stoppedRec}
         />
       </span>  
@@ -161,8 +158,8 @@ const RecordView = () => {
       {!isFilePicked ?
       <span>
         <label 
-          className="file-upload"
-          for="file-upload">
+          className="file-upload-mobile"
+          for="file-upload-mobile">
             UPLOAD VIDEO
         </label>
         <input 
@@ -173,8 +170,8 @@ const RecordView = () => {
       </span> :
       <span>
         <label 
-          className="file-upload"
-          for="confirm-upload">
+          className="file-upload-mobile"
+          for="confirm-upload-mobile">
             SUBMIT VIDEO
         </label>
         <input 
