@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div id='hero'>
+        {/* <div id='hero'> */}
           {/* <RecordingAPI/> */}
           <MobileView>
             <div className='mobile'>
@@ -30,7 +30,7 @@ class App extends Component {
               </div>
             </div>
           </BrowserView>
-        </div>
+        {/* </div> */}
       </div>
     );
   }

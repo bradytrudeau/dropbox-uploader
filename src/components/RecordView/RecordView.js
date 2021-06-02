@@ -119,9 +119,9 @@ const RecordView = () => {
       <img width="50%" height="50%" src={Logo} className="logo-mobile"></img>
       {!isFilePicked ?
         <div className='player-wrapper-mobile'>
-          <img width="350" height="175" src={Photo}/>
+          <img width="300" height="150" src={Photo}/>
         </div> :
-        <video width="700" height="350" controls>
+        <video width="300" height="150" controls>
           <source src={URL.createObjectURL(selectedFile)}/>
         </video>
       }
