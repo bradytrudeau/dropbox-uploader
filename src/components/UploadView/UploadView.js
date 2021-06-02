@@ -1,15 +1,26 @@
 import React, {useState}  from 'react';
+import { useReactMediaRecorder } from "react-media-recorder";
 import { FaCameraRetro } from 'react-icons/fa';
 import {Dropbox} from 'dropbox';
 import ReactPlayer from 'react-player';
 import Photo from '../../Images/sample-photo-rbc.png';
 import Icon from '../../Images/rbc-icon4.png';
 import Logo from '../../Images/rbc-logo.png';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
 const UploadView = () => {
+  const {
+    startRecording,
+    stopRecording,
+    mediaBlobUrl,
+  } = useReactMediaRecorder({ video: true, audio: true, blobPropertyBag: {
+    type: "video/mp4"
+} });
 
+  const [curStatus, setCurStatus] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
   const [videoPreview, setPreview] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
@@ -29,6 +40,29 @@ const UploadView = () => {
           console.error(error);
         });
     
+    }
+
+    // Starts recording of new video
+    const startedRec = () => {
+      startRecording();
+      setCurStatus(false);
+    }
+
+    // Stops recording of new video and creates blob
+    const stoppedRec = async () => {
+      stopRecording();
+      setCurStatus(true);
+      const videoBlob = await fetch(mediaBlobUrl).then(r => r.blob());
+      const url = new Blob ([videoBlob]);
+      // Creates a video file with a randomized file name
+      const videoFile = new File([videoBlob], `${uuidv4()}.${"mp4"}`, { type: "video/mp4" })
+
+      console.log('Video File:', videoFile);
+      console.log('Blob:', url);
+        
+      
+      setSelectedFile(videoFile);
+      setIsFilePicked(true);
     }
 
     // Handles input change and assigns input value to selectedFile variable
@@ -55,8 +89,33 @@ const UploadView = () => {
       >
         <img src={Icon}/>
       </h1>
+      {curStatus ?
+      <span>     
+        <label
+          className="video-record" 
+          for="video-record">
+            RECORD VIDEO
+        </label>
+        <input 
+          id="video-record"
+          onClick={startedRec}
+        />
+      </span>  
+      :
+      <span>     
+        <label
+          className="video-record" 
+          for="video-record">
+            STOP RECORDING
+        </label>
+        <input 
+          id="video-record"
+          onClick={stoppedRec}
+        />
+      </span>  
+      }
       {!isFilePicked ?
-      <div>
+      <span>
         <label 
           className="file-upload"
           for="file-upload">
@@ -67,8 +126,8 @@ const UploadView = () => {
           type="file"
           onChange={changeHandler}
         /> 
-      </div> :
-      <div>
+      </span> :
+      <span>
         <label 
           className="file-upload"
           for="confirm-upload">
@@ -79,7 +138,7 @@ const UploadView = () => {
           type="submit"
           onClick={() => uploadToDropbox()}
         /> 
-      </div>}
+      </span>}
     </div>
   );
 };

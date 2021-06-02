@@ -1,25 +1,13 @@
 import React, {useState} from 'react';
-import { useReactMediaRecorder } from "react-media-recorder";
-import { FaCameraRetro } from 'react-icons/fa';
 import {Dropbox} from 'dropbox';
-import ReactPlayer from 'react-player';
 import Logo from '../../Images/rbc-logo.png';
 import Photo from '../../Images/sample-photo-rbc.png';
 import Icon from '../../Images/rbc-icon4.png';
-import { v4 as uuidv4 } from 'uuid';
 
 
 
 const RecordView = () => {
-  const {
-    startRecording,
-    stopRecording,
-    mediaBlobUrl,
-  } = useReactMediaRecorder({ video: true, audio: true, blobPropertyBag: {
-    type: "video/mp4"
-} });
 
-  const [curStatus, setCurStatus] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -39,30 +27,9 @@ const RecordView = () => {
         });
     }
 
-  // Starts recording of new video
-  const startedRec = () => {
-    startRecording();
-    setCurStatus(false);
-  }
-
-  // Stops recording of new video and creates blob
-  const stoppedRec = async () => {
-    stopRecording();
-    setCurStatus(true);
-    const videoBlob = await fetch(mediaBlobUrl).then(r => r.blob());
-    const url = new Blob ([videoBlob]);
-    // Creates a video file with a randomized file name
-    const videoFile = new File([videoBlob], `${uuidv4()}.${"mp4"}`, { type: "video/mp4" })
-
-    console.log('Video File:', videoFile);
-    console.log('Blob:', url);
-      
-    
-    setSelectedFile(videoFile);
-    setIsFilePicked(true);
-  }
-
   // Handles input change and assigns input value to selectedFile variable
+  // This is called by both RECORD and UPLOAD buttons because on mobile, the camera
+  // will automatically be triggered to open when clicking these inputs.
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     console.log('ETF:', event.target.files[0]);
@@ -86,7 +53,6 @@ const RecordView = () => {
       >
       <img width="50%" height="50%" src={Icon}/>
       </h1>
-      {curStatus ?
       <span>     
         <label
           className="video-record-mobile" 
@@ -95,22 +61,10 @@ const RecordView = () => {
         </label>
         <input 
           id="video-record-mobile"
-          onClick={startedRec}
+          type="file"
+          onChange={changeHandler}
         />
       </span>  
-      :
-      <span>     
-        <label
-          className="video-record-mobile" 
-          for="video-record-mobile">
-            STOP RECORDING
-        </label>
-        <input 
-          id="video-record-mobile"
-          onClick={stoppedRec}
-        />
-      </span>  
-      }
       {!isFilePicked ?
       <span>
         <label 
