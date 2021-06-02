@@ -8,9 +8,6 @@ body {
   text-align: center;
 }
 
-#hero {
-}
-
 .mobile {
   text-align: center;
   background-color: #ffffff;
@@ -26,6 +23,23 @@ body {
   /* padding-right: 40px;
   padding-left: 40px;
   padding-bottom: 250px; */
+  text-align: center;
+}
+
+.browser {
+  text-align: center;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 750px;
+  margin-left: -400px;
+  margin-top: -375px;
+  border-radius: 10%;
+}
+
+#browser-inner {
   text-align: center;
 }
 
@@ -152,6 +166,18 @@ body {
 }
 
 #confirm-upload {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+#confirm-upload-mobile {
   position: absolute;
   z-index: -1;
   top: 0;
