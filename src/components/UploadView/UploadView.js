@@ -24,9 +24,8 @@ const UploadView = () => {
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     console.log('Selected File:', selectedFile);
-    // var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
+    var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
     // var ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-    var ACCESS_TOKEN = 'FKacjdkqRdUAAAAAAAAAAVUsGsrgl_JIpkimcnePViZ0KwnR2UXYfTGwK4rkBbor';
     
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     console.log('FILE:', selectedFile);
@@ -67,6 +66,8 @@ const UploadView = () => {
 
     // Starts recording of new video
     const startedRec = () => {
+      setSelectedFile();
+      setIsFilePicked(false);
       mediaRecorder.start();
       console.log('Recorder Status:', mediaRecorder.state);
       setCurStatus(false);

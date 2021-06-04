@@ -13,8 +13,9 @@ const RecordView = () => {
   // Uploads selected file to dbx
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
-    // var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
-    var ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+    var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
+    // var ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     console.log('FILE:', selectedFile);
         dbx.filesUpload({path: '/' + selectedFile.name, contents: selectedFile})
