@@ -4,8 +4,6 @@ import Logo from '../../Images/rbc-logo.png';
 import Photo from '../../Images/sample-photo-rbc.png';
 import Icon from '../../Images/rbc-icon4.png';
 
-
-
 const RecordView = () => {
 
   const [selectedFile, setSelectedFile] = useState();
@@ -21,6 +19,8 @@ const RecordView = () => {
         dbx.filesUpload({path: '/' + selectedFile.name, contents: selectedFile})
         .then(function(response) {
           console.log(response);
+          setSelectedFile();
+          setIsFilePicked(false);
         })
         .catch(function(error) {
           console.error(error);
