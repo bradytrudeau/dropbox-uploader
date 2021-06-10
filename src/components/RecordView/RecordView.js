@@ -6,13 +6,14 @@ import Icon from '../../Images/rbc-icon4.png';
 
 const RecordView = () => {
 
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
 
   // Uploads selected file to dbx
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+    setIsFilePicked(false);
     var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
     // var ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
@@ -21,8 +22,7 @@ const RecordView = () => {
         dbx.filesUpload({path: '/' + selectedFile.name, contents: selectedFile})
         .then(function(response) {
           console.log(response);
-          setSelectedFile();
-          setIsFilePicked(false);
+          setSelectedFile(null);
         })
         .catch(function(error) {
           console.error(error);
@@ -47,7 +47,7 @@ const RecordView = () => {
           <img width="300" height="150" src={Photo}/>
         </div> :
         <video width="300" height="150" controls>
-          <source src={URL.createObjectURL(selectedFile)}/>
+          <source src={URL.createObjectURL(selectedFile)} type="video/mp4"/>
         </video>
       }
       <h1

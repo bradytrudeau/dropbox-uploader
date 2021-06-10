@@ -16,6 +16,7 @@ const UploadView = () => {
     video: true
   });
   const [vid, setVideo] = useState();
+  const [photoHidden, setPhotoHidden] = useState(false);
   const [name, setName] = useState('');
   const [savedName, setSavedName] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState();
@@ -28,6 +29,8 @@ const UploadView = () => {
   // Handles upload of selected file to Dropbox
   const uploadToDropbox = () => {
     // const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+    setIsFilePicked(false);
+    setPhotoHidden(false);
     console.log('Selected File:', selectedFile);
     var ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
     // var ACCESS_TOKEN = process.env.ACCESS_TOKEN;
@@ -39,7 +42,6 @@ const UploadView = () => {
           console.log(response);
           setMediaRecorder();
           setSelectedFile();
-          setIsFilePicked(false);
           setName('');
           setSavedName('');
         })
@@ -98,6 +100,7 @@ const UploadView = () => {
         // const videoFile = new File([blob], `${uuidv4()}.${"mp4"}`, { type: "video/mp4" })
         const videoFile = new File([blob], `RBC WAFA 2021 ${savedName}.${"mp4"}`, { type: "video/mp4" })
         console.log('File:', videoFile);
+        setMediaRecorder(null);
         setSelectedFile(videoFile);
         setIsFilePicked(true);
         setUploadVisible(false);
@@ -109,6 +112,7 @@ const UploadView = () => {
       setSelectedFile(event.target.files[0]);
       setIsFilePicked(true);
       setUploadVisible(false);
+      setPhotoHidden(true);
     };
 
     // Handles input change and assigns input value to selectedFile variable
@@ -148,7 +152,7 @@ const UploadView = () => {
   return (
     <div>
       <img src={Logo} className="logo"></img>
-      {!mediaRecorder ?
+      {/* {!mediaRecorder ?
       <div className='player-wrapper'>
         <img src={Photo}/>
       </div> :
@@ -159,7 +163,22 @@ const UploadView = () => {
       <video width="700" height="350" controls>
         <source src={URL.createObjectURL(selectedFile)}/>
       </video>
-      }
+      } */}
+      {!photoHidden ?
+      <div className='player-wrapper'>
+        <img src={Photo}/>
+      </div> :
+      null}
+      {mediaRecorder ?
+      <div className='player-wrapper'>
+        <video src={vid} width="700" height="350" controls autoPlay muted/>
+      </div> :
+      null}
+      {isFilePicked ?
+      <video width="700" height="350" controls>
+        <source src={URL.createObjectURL(selectedFile)}/>
+      </video> :
+      null}
       {!curStatus ?
       <h1
         className="icon"
