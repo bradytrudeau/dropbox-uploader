@@ -6,6 +6,8 @@ import Icon from '../../Images/rbc-icon4.png';
 import RecordingIcon from '../../Images/recording-icon.png';
 import Logo from '../../Images/rbc-logo.png';
 import { v4 as uuidv4 } from 'uuid';
+import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const UploadView = () => {
 
@@ -14,11 +16,14 @@ const UploadView = () => {
     video: true
   });
   const [vid, setVideo] = useState();
+  const [name, setName] = useState('');
+  const [savedName, setSavedName] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState();
   const [curStatus, setCurStatus] = useState(true);
   const [selectedFile, setSelectedFile] = useState();
   const [chunks, setChunks] = useState([]);
 	const [isFilePicked, setIsFilePicked] = useState(false);
+  const [uploadVisible, setUploadVisible] = useState(false);
 
   // Handles upload of selected file to Dropbox
   const uploadToDropbox = () => {
@@ -35,6 +40,8 @@ const UploadView = () => {
           setMediaRecorder();
           setSelectedFile();
           setIsFilePicked(false);
+          setName('');
+          setSavedName('');
         })
         .catch(function(error) {
           console.error(error);
@@ -88,10 +95,12 @@ const UploadView = () => {
       mediaRecorder.onstop = (e) => {
         const blob = new Blob(chunks, { 'type' : 'video/mp4' });
         setChunks([]);
-        const videoFile = new File([blob], `${uuidv4()}.${"mp4"}`, { type: "video/mp4" })
+        // const videoFile = new File([blob], `${uuidv4()}.${"mp4"}`, { type: "video/mp4" })
+        const videoFile = new File([blob], `RBC WAFA 2021 ${savedName}.${"mp4"}`, { type: "video/mp4" })
         console.log('File:', videoFile);
         setSelectedFile(videoFile);
         setIsFilePicked(true);
+        setUploadVisible(false);
       }
     }
 
@@ -99,7 +108,42 @@ const UploadView = () => {
     const changeHandler = (event) => {
       setSelectedFile(event.target.files[0]);
       setIsFilePicked(true);
+      setUploadVisible(false);
     };
+
+    // Handles input change and assigns input value to selectedFile variable
+    const nameChange = (event) => {
+      setName(event.target.value);
+      console.log('NAME:', name);
+    };
+
+    const saveName = () => {
+      setSavedName(name);
+      setUploadVisible(true);
+    }
+
+
+    // const CssTextField = withStyles({
+    //   root: {
+    //     '& label.Mui-focused': {
+    //       color: '#0560AA',
+    //     },
+    //     '& .MuiInput-underline:after': {
+    //       borderBottomColor: '0560AA',
+    //     },
+    //     '& .MuiOutlinedInput-root': {
+    //       '& fieldset': {
+    //         borderColor: '#98CAD8',
+    //       },
+    //       '&:hover fieldset': {
+    //         borderColor: '#0560AA',
+    //       },
+    //       '&.Mui-focused fieldset': {
+    //         borderColor: '0560AA',
+    //       },
+    //     },
+    //   },
+    // })(TextField);
   
   return (
     <div>
@@ -110,7 +154,7 @@ const UploadView = () => {
       </div> :
       !isFilePicked ?
       <div className='player-wrapper'>
-        <video src={vid} width="700" height="350" controls autoPlay/>
+        <video src={vid} width="700" height="350" controls autoPlay muted/>
       </div> :
       <video width="700" height="350" controls>
         <source src={URL.createObjectURL(selectedFile)}/>
@@ -127,7 +171,7 @@ const UploadView = () => {
       >
         <img src={Icon}/>
       </h1>}
-      {!mediaRecorder ?
+      {/* {!mediaRecorder ?
       <span>     
         <label
           className="init-record" 
@@ -189,7 +233,98 @@ const UploadView = () => {
           type="submit"
           onClick={() => uploadToDropbox()}
         /> 
-      </span>}
+      </span>} */}
+      {!savedName ? 
+        <span>
+          <TextField 
+            size='small'
+            label="Your Name?"
+            variant='outlined'
+            value={name}
+            onChange={nameChange} 
+          />
+        </span>
+      :
+      !mediaRecorder ?
+      <span>     
+        <label
+          className="init-record" 
+          for="init-record">
+            INITIALIZE RECORDING
+        </label>
+        <input 
+          id="init-record"
+          onClick={initRec}
+        />
+      </span>  
+      :
+      curStatus ?
+      <span>     
+        <label
+          className="video-record" 
+          for="video-record">
+            RECORD VIDEO
+        </label>
+        <input 
+          id="video-record"
+          onClick={startedRec}
+        />
+      </span>  
+      :
+      <span>     
+        <label
+          className="video-record" 
+          for="video-record">
+            STOP RECORDING
+        </label>
+        <input 
+          id="video-record"
+          onClick={stoppedRec}
+        />
+      </span>  
+      }
+      {!savedName ? 
+      <span>
+        <label 
+          className="name-input-btn"
+          for="confirm-name">
+            SUBMIT NAME
+        </label>
+        <input 
+          id="confirm-name"
+          onClick={() => saveName()}
+        /> 
+      </span>
+      :
+      null}
+      {uploadVisible ?
+      <span>
+        <label 
+          className="file-upload"
+          for="file-upload">
+            UPLOAD VIDEO
+        </label>
+        <input 
+          id="file-upload"
+          type="file"
+          onChange={changeHandler}
+        /> 
+      </span> :
+      null}
+      {isFilePicked ?
+      <span>
+        <label 
+          className="file-upload"
+          for="confirm-upload">
+            SUBMIT VIDEO
+        </label>
+        <input 
+          id="confirm-upload"
+          type="submit"
+          onClick={() => uploadToDropbox()}
+        /> 
+      </span> :
+      null}
     </div>
   );
 };

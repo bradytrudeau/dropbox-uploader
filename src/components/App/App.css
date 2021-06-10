@@ -104,6 +104,24 @@ body {
   margin-left: 5px;
 }
 
+.name-input {
+  margin-right: 5px;
+}
+
+.name-input-btn {
+  font-size: 14px;
+  background: #E6E6E6;
+  border: 0;
+  color: #0560AA;
+  padding: 10px 20px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-left: 5px;
+}
+
+
 #file-upload {
   position: absolute;
   z-index: -1;
@@ -191,6 +209,18 @@ body {
 }
 
 #confirm-upload {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+#confirm-name {
   position: absolute;
   z-index: -1;
   top: 0;
