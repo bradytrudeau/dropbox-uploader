@@ -58,7 +58,7 @@ const RecordView = () => {
       <span>     
         <label
           className="video-record-mobile" 
-          for="video-record-mobile">
+          htmlFor="video-record-mobile">
             RECORD VIDEO
         </label>
         <input 
@@ -71,7 +71,7 @@ const RecordView = () => {
       <span>
         <label 
           className="file-upload-mobile"
-          for="file-upload-mobile">
+          htmlFor="file-upload-mobile">
             UPLOAD VIDEO
         </label>
         <input 
@@ -83,7 +83,7 @@ const RecordView = () => {
       <span>
         <label 
           className="file-upload-mobile"
-          for="confirm-upload-mobile">
+          htmlFor="confirm-upload-mobile">
             SUBMIT VIDEO
         </label>
         <input 
